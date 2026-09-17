@@ -81,12 +81,12 @@ export const RegisterPage: FC = () => {
     <Modal
       isOpen={true}
       onClose={handleClose}
-      maxWidth="md"
+      maxWidth="lg"
       showCloseButton={true}
       title={selectedRole === 'VENDOR' ? 'List Your Venue' : 'Create an Account'}
       headerAlign="center"
     >
-      <div className="flex flex-col gap-4 text-left">
+      <div className="flex flex-col gap-4 text-left animate-content-fade">
         {/* MODAL BRAND HEADER */}
         <div className="flex flex-col items-center text-center pt-1 pb-1">
           <div className="w-11 h-11 rounded-2xl bg-[#FFF0F3] text-[#FF385C] flex items-center justify-center shadow-xs border border-[#FF385C]/20 mb-2.5">

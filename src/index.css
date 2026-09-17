@@ -51,7 +51,11 @@ body {
 @keyframes modalPop {
   0% {
     opacity: 0;
-    transform: scale(0.94) translateY(12px);
+    transform: scale(0.90) translateY(20px);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.015) translateY(-2px);
   }
   100% {
     opacity: 1;
@@ -68,11 +72,27 @@ body {
   }
 }
 
+@keyframes contentFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .animate-modal-pop {
-  animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: modalPop 0.32s cubic-bezier(0.34, 1.45, 0.64, 1) forwards;
 }
 
 .animate-backdrop-fade {
-  animation: backdropFade 0.2s ease-out forwards;
+  animation: backdropFade 0.25s ease-out forwards;
 }
+
+.animate-content-fade {
+  animation: contentFadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 
