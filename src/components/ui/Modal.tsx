@@ -112,7 +112,7 @@ export const Modal: FC<ModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200 motion-reduce:animate-none"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-xs animate-backdrop-fade motion-reduce:animate-none"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -124,7 +124,7 @@ export const Modal: FC<ModalProps> = ({
         ref={dialogRef}
         tabIndex={-1}
         className={cn(
-          'w-full bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] focus:outline-none border border-[#EBEBEB]',
+          'w-full bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] focus:outline-none border border-[#EBEBEB] animate-modal-pop motion-reduce:animate-none',
           maxWidthMap[maxWidth]
         )}
       >
