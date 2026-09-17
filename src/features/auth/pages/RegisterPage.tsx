@@ -10,6 +10,7 @@ import { registerSchema } from '../schemas/auth.schema';
 import type { RegisterFormValues } from '../types/auth.types';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
+import { Modal } from '@/components/ui/Modal';
 import { cn } from '@/lib/utils/cn';
 
 export const RegisterPage: FC = () => {
@@ -20,6 +21,14 @@ export const RegisterPage: FC = () => {
 
   const { signup, isSigningUp, signupError } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleClose = () => {
+    if (window.history.length > 2) {
+      navigate(-1);
+    } else {
+      navigate('/halls');
+    }
+  };
 
   const {
     register,
@@ -69,23 +78,30 @@ export const RegisterPage: FC = () => {
   };
 
   return (
-    <div className="w-full flex items-center justify-center py-2 sm:py-4 px-4 sm:px-6">
-      <div className="w-full max-w-lg bg-white border border-[#DDDDDD] rounded-3xl shadow-xl overflow-hidden text-left my-auto">
+    <Modal
+      isOpen={true}
+      onClose={handleClose}
+      maxWidth="lg"
+      showCloseButton={true}
+    >
+      <div className="flex flex-col gap-4 text-left">
         {/* HEADER */}
-        <div className="bg-[#FFF0F3] p-4 sm:p-5 text-center border-b border-[#FF385C]/15 flex flex-col items-center">
+        <div className="bg-[#FFF0F3] p-4 text-center rounded-2xl border border-[#FF385C]/15 flex flex-col items-center">
           <div className="w-10 h-10 rounded-2xl bg-[#FF385C] text-white flex items-center justify-center shadow-md mb-2">
             <Building2 className="w-5 h-5" />
           </div>
-          <h1 className="text-xl sm:text-2xl font-black text-[#222222] tracking-tight">
-            Create an Account
-          </h1>
+          <h2 className="text-xl sm:text-2xl font-black text-[#222222] tracking-tight">
+            {selectedRole === 'VENDOR' ? 'List Your Venue' : 'Create an Account'}
+          </h2>
           <p className="text-xs text-[#717171] mt-0.5 max-w-sm">
-            Join MarriageHall.com to discover venues, check availability, or manage your hall listings.
+            {selectedRole === 'VENDOR'
+              ? 'Join MarriageHall.com to list your wedding venue, check reservations, and receive host inquiries.'
+              : 'Join MarriageHall.com to discover venues, check availability, or manage your hall listings.'}
           </p>
         </div>
 
         {/* REGISTRATION FORM */}
-        <form onSubmit={handleSubmit(onSubmit)} className="p-5 sm:p-6 flex flex-col gap-3.5">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3.5 pt-1">
           {/* ROLE SELECTOR CARDS */}
           <div className="flex flex-col gap-1.5">
             <label className="text-[11px] font-bold uppercase tracking-wider text-[#717171]">
@@ -277,6 +293,6 @@ export const RegisterPage: FC = () => {
           </div>
         </form>
       </div>
-    </div>
+    </Modal>
   );
 };
