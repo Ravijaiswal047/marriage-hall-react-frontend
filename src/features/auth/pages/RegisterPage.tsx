@@ -81,57 +81,59 @@ export const RegisterPage: FC = () => {
     <Modal
       isOpen={true}
       onClose={handleClose}
-      maxWidth="lg"
+      maxWidth="md"
       showCloseButton={true}
+      title={selectedRole === 'VENDOR' ? 'List Your Venue' : 'Create an Account'}
+      headerAlign="center"
     >
       <div className="flex flex-col gap-4 text-left">
-        {/* HEADER */}
-        <div className="bg-[#FFF0F3] p-4 text-center rounded-2xl border border-[#FF385C]/15 flex flex-col items-center">
-          <div className="w-10 h-10 rounded-2xl bg-[#FF385C] text-white flex items-center justify-center shadow-md mb-2">
-            <Building2 className="w-5 h-5" />
+        {/* MODAL BRAND HEADER */}
+        <div className="flex flex-col items-center text-center pt-1 pb-1">
+          <div className="w-11 h-11 rounded-2xl bg-[#FFF0F3] text-[#FF385C] flex items-center justify-center shadow-xs border border-[#FF385C]/20 mb-2.5">
+            <Building2 className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-[#222222] tracking-tight">
-            {selectedRole === 'VENDOR' ? 'List Your Venue' : 'Create an Account'}
+            {selectedRole === 'VENDOR' ? 'Become a Venue Host' : 'Welcome to MarriageHall'}
           </h2>
-          <p className="text-xs text-[#717171] mt-0.5 max-w-sm">
+          <p className="text-xs sm:text-sm text-[#717171] mt-1 max-w-sm font-normal leading-relaxed">
             {selectedRole === 'VENDOR'
-              ? 'Join MarriageHall.com to list your wedding venue, check reservations, and receive host inquiries.'
-              : 'Join MarriageHall.com to discover venues, check availability, or manage your hall listings.'}
+              ? 'List your marriage hall or banquet to receive bookings & host inquiries.'
+              : 'Discover top venues, check availability, and manage reservations.'}
           </p>
         </div>
 
         {/* REGISTRATION FORM */}
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3.5 pt-1">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
           {/* ROLE SELECTOR CARDS */}
           <div className="flex flex-col gap-1.5">
             <label className="text-[11px] font-bold uppercase tracking-wider text-[#717171]">
-              I want to:
+              Account Type:
             </label>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2.5">
               {/* CUSTOMER CARD */}
               <button
                 type="button"
                 onClick={() => setValue('role', 'USER')}
                 className={cn(
-                  'p-2.5 sm:p-3 rounded-2xl border text-left flex flex-col gap-1 transition-all',
+                  'p-3 rounded-2xl border text-left flex flex-col gap-1 transition-all cursor-pointer',
                   selectedRole === 'USER'
-                    ? 'bg-[#FFF0F3] border-[#FF385C] shadow-xs'
-                    : 'bg-white border-[#DDDDDD] hover:bg-[#F7F7F7]'
+                    ? 'bg-[#FFF0F3]/80 border-[#FF385C] ring-2 ring-[#FF385C]/20 shadow-xs'
+                    : 'bg-white border-[#EBEBEB] hover:border-[#DDDDDD] hover:bg-[#F7F7F7]'
                 )}
               >
                 <div className="flex items-center justify-between">
                   <UserCheck
                     className={cn(
-                      'w-4 h-4 sm:w-5 sm:h-5',
+                      'w-4 h-4',
                       selectedRole === 'USER' ? 'text-[#FF385C]' : 'text-[#717171]'
                     )}
                   />
                   <div
                     className={cn(
-                      'w-4 h-4 rounded-full border-2 flex items-center justify-center',
+                      'w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all',
                       selectedRole === 'USER'
                         ? 'border-[#FF385C] bg-[#FF385C]'
-                        : 'border-[#DDDDDD]'
+                        : 'border-[#CCCCCC]'
                     )}
                   >
                     {selectedRole === 'USER' && (
@@ -139,10 +141,12 @@ export const RegisterPage: FC = () => {
                     )}
                   </div>
                 </div>
-                <span className="text-xs font-bold text-[#222222]">Book Venues</span>
-                <span className="text-[10px] text-[#717171] leading-tight">
-                  For couples & event planners
-                </span>
+                <div>
+                  <span className="text-xs font-bold text-[#222222] block">Book Venues</span>
+                  <span className="text-[10px] text-[#717171] leading-tight block">
+                    Couples & planners
+                  </span>
+                </div>
               </button>
 
               {/* VENDOR CARD */}
@@ -150,25 +154,25 @@ export const RegisterPage: FC = () => {
                 type="button"
                 onClick={() => setValue('role', 'VENDOR')}
                 className={cn(
-                  'p-2.5 sm:p-3 rounded-2xl border text-left flex flex-col gap-1 transition-all',
+                  'p-3 rounded-2xl border text-left flex flex-col gap-1 transition-all cursor-pointer',
                   selectedRole === 'VENDOR'
-                    ? 'bg-[#FFF0F3] border-[#FF385C] shadow-xs'
-                    : 'bg-white border-[#DDDDDD] hover:bg-[#F7F7F7]'
+                    ? 'bg-[#FFF0F3]/80 border-[#FF385C] ring-2 ring-[#FF385C]/20 shadow-xs'
+                    : 'bg-white border-[#EBEBEB] hover:border-[#DDDDDD] hover:bg-[#F7F7F7]'
                 )}
               >
                 <div className="flex items-center justify-between">
                   <Store
                     className={cn(
-                      'w-4 h-4 sm:w-5 sm:h-5',
+                      'w-4 h-4',
                       selectedRole === 'VENDOR' ? 'text-[#FF385C]' : 'text-[#717171]'
                     )}
                   />
                   <div
                     className={cn(
-                      'w-4 h-4 rounded-full border-2 flex items-center justify-center',
+                      'w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all',
                       selectedRole === 'VENDOR'
                         ? 'border-[#FF385C] bg-[#FF385C]'
-                        : 'border-[#DDDDDD]'
+                        : 'border-[#CCCCCC]'
                     )}
                   >
                     {selectedRole === 'VENDOR' && (
@@ -176,10 +180,12 @@ export const RegisterPage: FC = () => {
                     )}
                   </div>
                 </div>
-                <span className="text-xs font-bold text-[#222222]">List Venue</span>
-                <span className="text-[10px] text-[#717171] leading-tight">
-                  For hall owners & managers
-                </span>
+                <div>
+                  <span className="text-xs font-bold text-[#222222] block">List Venue</span>
+                  <span className="text-[10px] text-[#717171] leading-tight block">
+                    Hall owners & hosts
+                  </span>
+                </div>
               </button>
             </div>
             {errors.role?.message && (
@@ -187,19 +193,37 @@ export const RegisterPage: FC = () => {
             )}
           </div>
 
-          {/* FULL NAME */}
-          <div className="flex flex-col gap-1">
-            <label className="text-[11px] font-bold uppercase tracking-wider text-[#717171]">
-              Full Name
-            </label>
-            <Input
-              type="text"
-              placeholder="e.g. Ananya Roy"
-              {...register('name')}
-              error={errors.name?.message}
-              leftIcon={<UserIcon className="w-4 h-4 text-[#717171]" />}
-              className="text-xs py-2"
-            />
+          {/* NAME & PHONE IN 2 COLUMNS ON DESKTOP */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* FULL NAME */}
+            <div className="flex flex-col gap-1">
+              <label className="text-[11px] font-bold uppercase tracking-wider text-[#717171]">
+                Full Name
+              </label>
+              <Input
+                type="text"
+                placeholder="e.g. Ananya Roy"
+                {...register('name')}
+                error={errors.name?.message}
+                leftIcon={<UserIcon className="w-4 h-4 text-[#717171]" />}
+                className="text-xs py-2"
+              />
+            </div>
+
+            {/* PHONE NUMBER */}
+            <div className="flex flex-col gap-1">
+              <label className="text-[11px] font-bold uppercase tracking-wider text-[#717171]">
+                Phone (Optional)
+              </label>
+              <Input
+                type="tel"
+                placeholder="+91 98765 43210"
+                {...register('phone')}
+                error={errors.phone?.message}
+                leftIcon={<Phone className="w-4 h-4 text-[#717171]" />}
+                className="text-xs py-2"
+              />
+            </div>
           </div>
 
           {/* EMAIL ADDRESS */}
@@ -217,21 +241,6 @@ export const RegisterPage: FC = () => {
             />
           </div>
 
-          {/* PHONE NUMBER */}
-          <div className="flex flex-col gap-1">
-            <label className="text-[11px] font-bold uppercase tracking-wider text-[#717171]">
-              Phone Number (Optional)
-            </label>
-            <Input
-              type="tel"
-              placeholder="+91 98765 43210"
-              {...register('phone')}
-              error={errors.phone?.message}
-              leftIcon={<Phone className="w-4 h-4 text-[#717171]" />}
-              className="text-xs py-2"
-            />
-          </div>
-
           {/* PASSWORD */}
           <div className="flex flex-col gap-1">
             <label className="text-[11px] font-bold uppercase tracking-wider text-[#717171]">
@@ -239,7 +248,7 @@ export const RegisterPage: FC = () => {
             </label>
             <Input
               type={showPassword ? 'text' : 'password'}
-              placeholder="Create a strong password (min 6 chars)"
+              placeholder="Create a password (min 6 chars)"
               {...register('password')}
               error={errors.password?.message}
               leftIcon={<Lock className="w-4 h-4 text-[#717171]" />}
@@ -247,7 +256,7 @@ export const RegisterPage: FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="text-[#717171] hover:text-[#222222] p-1"
+                  className="text-[#717171] hover:text-[#222222] p-1 cursor-pointer"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? (
@@ -273,14 +282,14 @@ export const RegisterPage: FC = () => {
             type="submit"
             isLoading={isSigningUp}
             disabled={isSigningUp}
-            className="w-full py-2.5 text-sm font-bold shadow-md hover:shadow-lg mt-0.5"
+            className="w-full py-2.5 text-sm font-bold shadow-md hover:shadow-lg mt-1 bg-gradient-to-r from-[#FF385C] via-[#E00B41] to-[#D70466] hover:opacity-95 text-white border-none rounded-xl"
             rightIcon={<ArrowRight className="w-4 h-4" />}
           >
-            {selectedRole === 'VENDOR' ? 'Register as Vendor' : 'Create Customer Account'}
+            {selectedRole === 'VENDOR' ? 'Register as Host' : 'Create Account'}
           </Button>
 
           {/* LOGIN LINK */}
-          <div className="text-center pt-2.5 border-t border-[#DDDDDD]">
+          <div className="text-center pt-2.5 border-t border-[#EBEBEB]">
             <p className="text-xs text-[#717171]">
               Already have an account?{' '}
               <Link

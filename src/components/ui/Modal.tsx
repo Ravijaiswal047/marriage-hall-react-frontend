@@ -10,6 +10,7 @@ export interface ModalProps {
   children: ReactNode;
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '4xl' | 'full';
   showCloseButton?: boolean;
+  headerAlign?: 'left' | 'center';
 }
 
 export const Modal: FC<ModalProps> = ({
@@ -20,6 +21,7 @@ export const Modal: FC<ModalProps> = ({
   children,
   maxWidth = 'md',
   showCloseButton = true,
+  headerAlign = 'left',
 }) => {
   const generatedId = useId();
   const titleId = `${generatedId}-title`;
@@ -110,7 +112,7 @@ export const Modal: FC<ModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200 motion-reduce:animate-none"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200 motion-reduce:animate-none"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -122,38 +124,66 @@ export const Modal: FC<ModalProps> = ({
         ref={dialogRef}
         tabIndex={-1}
         className={cn(
-          'w-full bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] focus:outline-none',
+          'w-full bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] focus:outline-none border border-[#EBEBEB]',
           maxWidthMap[maxWidth]
         )}
       >
         {title || showCloseButton ? (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-[#DDDDDD] bg-white sticky top-0 z-10 shrink-0">
-            <div>
+          headerAlign === 'center' ? (
+            <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 border-b border-[#EBEBEB] bg-white sticky top-0 z-10 shrink-0">
+              {showCloseButton ? (
+                <button
+                  type="button"
+                  onClick={onClose}
+                  aria-label="Close dialog"
+                  className="p-1.5 text-[#222222] rounded-full hover:bg-[#F7F7F7] active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF385C]"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              ) : (
+                <div className="w-8" />
+              )}
               {title ? (
                 <h3
                   id={titleId}
-                  className="text-lg font-bold text-[#222222] tracking-tight"
+                  className="text-sm sm:text-base font-bold text-[#222222] tracking-tight text-center"
                 >
                   {title}
                 </h3>
-              ) : null}
-              {subtitle ? (
-                <p className="text-xs text-[#717171] mt-0.5">{subtitle}</p>
+              ) : (
+                <div />
+              )}
+              <div className="w-8" />
+            </div>
+          ) : (
+            <div className="flex items-center justify-between px-6 py-4 border-b border-[#EBEBEB] bg-white sticky top-0 z-10 shrink-0">
+              <div>
+                {title ? (
+                  <h3
+                    id={titleId}
+                    className="text-lg font-bold text-[#222222] tracking-tight"
+                  >
+                    {title}
+                  </h3>
+                ) : null}
+                {subtitle ? (
+                  <p className="text-xs text-[#717171] mt-0.5">{subtitle}</p>
+                ) : null}
+              </div>
+              {showCloseButton ? (
+                <button
+                  type="button"
+                  onClick={onClose}
+                  aria-label="Close dialog"
+                  className="p-1.5 text-[#222222] rounded-full hover:bg-[#F7F7F7] active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF385C]"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               ) : null}
             </div>
-            {showCloseButton ? (
-              <button
-                type="button"
-                onClick={onClose}
-                aria-label="Close dialog"
-                className="p-1.5 text-[#222222] rounded-full hover:bg-[#F7F7F7] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF385C]"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            ) : null}
-          </div>
+          )
         ) : null}
-        <div className="p-6 overflow-y-auto">{children}</div>
+        <div className="p-5 sm:p-6 overflow-y-auto">{children}</div>
       </div>
     </div>
   );
