@@ -22,8 +22,8 @@ export const hallFormSchema = z.object({
     .string()
     .optional()
     .refine(
-      (val) => !val || val.startsWith('http://') || val.startsWith('https://'),
-      'Cover image URL must start with http:// or https://'
+      (val) => !val || val.startsWith('http://') || val.startsWith('https://') || val.startsWith('data:image/'),
+      'Cover image URL must start with http://, https://, or data:image/'
     ),
   images: z.array(z.string()).optional(),
   hasAc: z.boolean(),
