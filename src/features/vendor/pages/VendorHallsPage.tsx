@@ -15,9 +15,8 @@ export const VendorHallsPage: FC = () => {
   const queryClient = useQueryClient();
 
   const { data: halls = [], isLoading, isError, error, refetch } = useQuery({
-    queryKey: ['vendorHalls', user?.id],
-    queryFn: () => hallsApi.getVendorHalls(user?.id || ''),
-    enabled: Boolean(user?.id),
+    queryKey: ['vendorHalls', user?.id || 'vendor-1'],
+    queryFn: () => hallsApi.getVendorHalls(user?.id || 'vendor-1'),
   });
 
   const deleteMutation = useMutation({
