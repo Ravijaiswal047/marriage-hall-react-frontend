@@ -11,6 +11,7 @@ const DEFAULT_MOCK_REVIEWS: Review[] = [
     reviewerAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200',
     rating: 5,
     comment: 'Exquisite ambiance, top-tier stage lighting, and super helpful management staff! Made our wedding reception unforgettable.',
+    isVerifiedBooking: true,
     createdAt: '2026-02-20T10:00:00.000Z',
   },
   {
@@ -21,6 +22,7 @@ const DEFAULT_MOCK_REVIEWS: Review[] = [
     reviewerAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200',
     rating: 4.5,
     comment: 'Spacious AC halls with great parking capacity. Highly recommended for big family weddings.',
+    isVerifiedBooking: true,
     createdAt: '2026-02-22T10:00:00.000Z',
   },
   {
@@ -31,6 +33,7 @@ const DEFAULT_MOCK_REVIEWS: Review[] = [
     reviewerAvatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200',
     rating: 5,
     comment: 'Lush green lawns and seamless catering setup. All guests loved the venue.',
+    isVerifiedBooking: true,
     createdAt: '2026-02-25T10:00:00.000Z',
   },
 ];
@@ -81,6 +84,7 @@ export const reviewsApi = {
       reviewerAvatar: data.reviewerAvatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200',
       rating: data.rating,
       comment: data.comment || 'Great venue and service!',
+      isVerifiedBooking: true,
       createdAt: new Date().toISOString(),
     };
 

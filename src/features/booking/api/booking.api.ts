@@ -292,9 +292,9 @@ export const bookingApi = {
     return {
       bookingId: match.id,
       totalAmount: match.totalAmount,
-      paidAmount: match.paidAmount,
-      dueAmount: match.dueAmount,
-      fullyPaid: match.dueAmount === 0,
+      paidAmount: match.paidAmount ?? 0,
+      dueAmount: match.dueAmount ?? 0,
+      fullyPaid: (match.dueAmount ?? 0) === 0,
       status: match.status,
     };
   },

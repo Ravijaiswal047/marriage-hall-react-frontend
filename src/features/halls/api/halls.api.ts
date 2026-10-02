@@ -326,7 +326,7 @@ export const hallsApi = {
     ['Mumbai', 'Delhi', 'Bangalore', 'Jaipur', 'Hyderabad', 'Udaipur', 'Goa', 'Chennai'].forEach((c) =>
       citiesSet.add(c)
     );
-    return Array.from(citiesSet);
+    return Array.from(citiesSet).filter((c): c is string => Boolean(c));
   },
 
   createHall: async (data: HallRequestDTO): Promise<Hall> => {

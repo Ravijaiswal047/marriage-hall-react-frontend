@@ -32,7 +32,7 @@ export const authApi = {
       userId: `user-${Date.now()}`,
       name: namePart,
       email: data.email,
-      role: data.role || 'CUSTOMER',
+      role: data.role || 'USER',
       phone: data.phone || '+91 98765 43210',
       avatarUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200',
     };
@@ -55,7 +55,7 @@ export const authApi = {
 
     // Fallback login mode for offline/unreachable backend
     const emailLower = data.email.toLowerCase();
-    let role: Role = 'CUSTOMER';
+    let role: Role = 'USER';
     if (emailLower.includes('admin')) {
       role = 'ADMIN';
     } else if (emailLower.includes('vendor')) {

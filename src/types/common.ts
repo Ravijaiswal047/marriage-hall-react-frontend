@@ -70,8 +70,11 @@ export interface Booking {
   guestCount?: number;
   customerName?: string;
   customerPhone?: string;
+  customerEmail?: string;
   specialRequests?: string;
   totalAmount: number;
+  paidAmount?: number;
+  dueAmount?: number;
   status: BookingStatus;
   createdAt?: string;
   updatedAt?: string;
@@ -95,7 +98,6 @@ export interface Review {
   reviewerAvatar?: string;
   rating: number;
   comment?: string;
-  isVerifiedBooking: boolean;
+  isVerifiedBooking?: boolean;
   createdAt?: string;
 }
-
