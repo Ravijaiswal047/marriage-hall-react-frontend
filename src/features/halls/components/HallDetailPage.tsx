@@ -15,6 +15,7 @@ import { Rating } from './Rating';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { ErrorState } from '@/components/ui/ErrorState';
 import { Badge } from '@/components/ui/Badge';
+import { toast } from '@/store/ui.store';
 
 export const HallDetailPage: FC = () => {
   const { hallId } = useParams<{ hallId: string }>();
@@ -24,6 +25,10 @@ export const HallDetailPage: FC = () => {
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
     setCopiedShare(true);
+    toast.success({
+      title: 'Link copied to clipboard!',
+      message: 'Share this wedding venue with your friends and family.',
+    });
     setTimeout(() => setCopiedShare(false), 2000);
   };
 

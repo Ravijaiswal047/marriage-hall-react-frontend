@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { authApi } from '../api/auth.api';
 import type { LoginRequestDTO, SignupRequestDTO } from '@/types/api';
 import { useAuthStore } from '@/store/auth.store';
+import { toast } from '@/store/ui.store';
 
 export const AUTH_QUERY_KEY = ['currentUser'];
 
@@ -25,6 +26,16 @@ export function useAuth() {
         avatarUrl: res.avatarUrl,
       });
       queryClient.invalidateQueries({ queryKey: AUTH_QUERY_KEY });
+      toast.success({
+        title: 'Welcome to MarriageHall!',
+        message: `Account created successfully. Welcome, ${res.name}!`,
+      });
+    },
+    onError: (err: Error) => {
+      toast.error({
+        title: 'Registration Failed',
+        message: err.message || 'Could not create account. Please try again.',
+      });
     },
   });
 
@@ -40,6 +51,16 @@ export function useAuth() {
         avatarUrl: res.avatarUrl,
       });
       queryClient.invalidateQueries({ queryKey: AUTH_QUERY_KEY });
+      toast.success({
+        title: 'Welcome back!',
+        message: `Signed in as ${res.name}`,
+      });
+    },
+    onError: (err: Error) => {
+      toast.error({
+        title: 'Login Failed',
+        message: err.message || 'Invalid email or password. Please check your details.',
+      });
     },
   });
 
@@ -53,6 +74,10 @@ export function useAuth() {
   const logout = () => {
     storeLogout();
     queryClient.removeQueries({ queryKey: AUTH_QUERY_KEY });
+    toast.info({
+      title: 'Signed Out',
+      message: 'You have been logged out safely.',
+    });
   };
 
   return {

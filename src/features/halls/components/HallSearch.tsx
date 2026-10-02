@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { FC, FormEvent } from 'react';
 import { Search, X } from 'lucide-react';
 import { useSearchStore } from '@/store/search.store';
@@ -11,11 +11,15 @@ export interface HallSearchProps {
 }
 
 export const HallSearch: FC<HallSearchProps> = ({
-  placeholder = 'Search by city or venue name...',
+  placeholder = 'Search by city, venue name, or address...',
   className,
 }) => {
   const { filters, setFilter } = useSearchStore();
   const [searchTerm, setSearchTerm] = useState(filters.city || '');
+
+  useEffect(() => {
+    setSearchTerm(filters.city || '');
+  }, [filters.city]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -28,12 +32,18 @@ export const HallSearch: FC<HallSearchProps> = ({
   };
 
   return (
-    <form key={filters.city || 'all'} onSubmit={handleSubmit} className={className}>
+    <form onSubmit={handleSubmit} className={className}>
       <div className="relative flex items-center w-full">
         <Input
           type="text"
-          defaultValue={filters.city || searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          value={searchTerm}
+          onChange={(e) => {
+            const val = e.target.value;
+            setSearchTerm(val);
+            if (!val.trim()) {
+              setFilter('city', undefined);
+            }
+          }}
           placeholder={placeholder}
           leftIcon={<Search className="w-4 h-4 text-[#717171]" />}
           rightIcon={
@@ -61,4 +71,3 @@ export const HallSearch: FC<HallSearchProps> = ({
     </form>
   );
 };
-

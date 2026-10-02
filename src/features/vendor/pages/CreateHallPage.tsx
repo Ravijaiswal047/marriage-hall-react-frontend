@@ -6,14 +6,13 @@ import { hallsApi } from '@/features/halls/api/halls.api';
 import type { HallRequestDTO } from '@/types/api';
 import type { Hall } from '@/types/common';
 import { useAuth } from '@/features/auth/hooks/useAuth';
-import { useUIStore } from '@/store/ui.store';
+import { toast } from '@/store/ui.store';
 import { HallForm } from '../components/HallForm';
 
 export const CreateHallPage: FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { user } = useAuth();
-  const addToast = useUIStore((state) => state.addToast);
 
   const createMutation = useMutation({
     mutationFn: (data: HallRequestDTO) => hallsApi.createHall(data),
@@ -32,14 +31,25 @@ export const CreateHallPage: FC = () => {
       });
 
       // 3. Trigger Toast success message
-      addToast({
-        type: 'success',
+      toast.success({
         title: 'Venue Published Successfully!',
         message: `"${newHall.name || 'Your venue'}" is now live and listed in your venue catalog.`,
+        action: {
+          label: 'View My Venues',
+          onClick: () => {
+            navigate('/vendor/halls');
+          },
+        },
       });
 
       // 4. Navigate back to vendor halls
       navigate('/vendor/halls');
+    },
+    onError: (err: Error) => {
+      toast.error({
+        title: 'Failed to Publish Venue',
+        message: err.message || 'An error occurred while publishing venue. Please try again.',
+      });
     },
   });
 

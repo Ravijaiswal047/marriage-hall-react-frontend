@@ -69,7 +69,9 @@ export const AdminHallsPage: FC = () => {
   const filteredContent = (pageData?.content || []).filter((h) =>
     searchQuery
       ? h.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        h.location.toLowerCase().includes(searchQuery.toLowerCase())
+        h.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (h.city && h.city.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (h.address && h.address.toLowerCase().includes(searchQuery.toLowerCase()))
       : true
   );
 

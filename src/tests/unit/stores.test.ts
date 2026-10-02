@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useAuthStore } from '@/store/auth.store';
 import { useSearchStore } from '@/store/search.store';
-import { useUIStore } from '@/store/ui.store';
+import { useUIStore, toast } from '@/store/ui.store';
 import { useFavoritesStore } from '@/features/favorites/hooks/useFavorites';
 import type { User } from '@/types/common';
 
@@ -89,14 +89,23 @@ describe('useUIStore', () => {
   });
 
   it('adds and removes toasts', () => {
-    useUIStore.getState().addToast({ type: 'success', title: 'Saved!' });
+    const id = useUIStore.getState().addToast({ type: 'success', title: 'Saved!' });
     const toasts = useUIStore.getState().toasts;
     expect(toasts.length).toBeGreaterThan(0);
-    expect(toasts[0].title).toBe('Saved!');
+    expect(toasts.find((t) => t.id === id)?.title).toBe('Saved!');
 
-    const id = toasts[0].id;
     useUIStore.getState().removeToast(id);
     expect(useUIStore.getState().toasts.find((t) => t.id === id)).toBeUndefined();
+  });
+
+  it('supports toast helper utilities (success, error, info, warning, dismiss)', () => {
+    const id = toast.success('Venue Created!');
+    let toasts = useUIStore.getState().toasts;
+    expect(toasts.some((t) => t.id === id && t.type === 'success' && t.title === 'Venue Created!')).toBe(true);
+
+    toast.dismiss(id);
+    toasts = useUIStore.getState().toasts;
+    expect(toasts.find((t) => t.id === id)).toBeUndefined();
   });
 });
 

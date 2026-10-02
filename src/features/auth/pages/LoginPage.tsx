@@ -3,7 +3,7 @@ import type { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Mail, Lock, Eye, EyeOff, Building2, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, Building2, ArrowRight, ShieldCheck, UserCheck } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { loginSchema } from '../schemas/auth.schema';
 import type { LoginFormValues } from '../types/auth.types';
@@ -23,6 +23,7 @@ export const LoginPage: FC = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -41,6 +42,17 @@ export const LoginPage: FC = () => {
     }
   };
 
+  const handleQuickDemoLogin = async (email: string, targetPath: string) => {
+    setValue('email', email);
+    setValue('password', 'Password123');
+    try {
+      await login({ email, password: 'Password123' });
+      navigate(targetPath, { replace: true });
+    } catch {
+      // Handled via toast/error state
+    }
+  };
+
   return (
     <div className="w-full flex items-center justify-center py-2 sm:py-4 px-4 sm:px-6">
       <div className="w-full max-w-md bg-white border border-[#DDDDDD] rounded-3xl shadow-xl overflow-hidden text-left my-auto">
@@ -55,6 +67,36 @@ export const LoginPage: FC = () => {
           <p className="text-xs text-[#717171] mt-0.5 max-w-xs">
             Log in to manage your venue bookings, explore top banquets, and connect with venue vendors.
           </p>
+        </div>
+
+        {/* QUICK DEMO ACCOUNTS */}
+        <div className="bg-[#F7F7F7] p-3 px-5 border-b border-[#DDDDDD] flex flex-col gap-1.5">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-[#717171] flex items-center gap-1">
+            <UserCheck className="w-3 h-3 text-[#FF385C]" /> Quick 1-Click Demo Login
+          </span>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <button
+              type="button"
+              onClick={() => handleQuickDemoLogin('admin@marriagehall.com', '/admin')}
+              className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-red-100 hover:bg-red-200 text-red-700 border border-red-200 transition-colors"
+            >
+              Demo Admin
+            </button>
+            <button
+              type="button"
+              onClick={() => handleQuickDemoLogin('vendor@marriagehall.com', '/vendor')}
+              className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-700 border border-rose-200 transition-colors"
+            >
+              Demo Vendor
+            </button>
+            <button
+              type="button"
+              onClick={() => handleQuickDemoLogin('customer@marriagehall.com', '/halls')}
+              className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-700 border border-emerald-200 transition-colors"
+            >
+              Demo Customer
+            </button>
+          </div>
         </div>
 
         {/* LOGIN FORM */}

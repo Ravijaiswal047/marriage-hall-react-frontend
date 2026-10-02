@@ -3,6 +3,7 @@ import { reviewsApi } from '../api/reviews.api';
 import { bookingApi } from '@/features/booking/api/booking.api';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import type { ReviewRequestDTO } from '@/types/api';
+import { toast } from '@/store/ui.store';
 
 export function useReviews(hallId?: string) {
   const queryClient = useQueryClient();
@@ -44,6 +45,16 @@ export function useReviews(hallId?: string) {
       });
       queryClient.invalidateQueries({ queryKey: ['hallReviews'] });
       queryClient.invalidateQueries({ queryKey: ['adminHallReviews'] });
+      toast.success({
+        title: 'Review Published!',
+        message: 'Thank you for sharing your venue experience.',
+      });
+    },
+    onError: (err: Error) => {
+      toast.error({
+        title: 'Review Submission Failed',
+        message: err.message || 'Could not publish review. Please try again.',
+      });
     },
   });
 

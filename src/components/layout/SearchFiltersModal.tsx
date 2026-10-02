@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import { useSearchStore } from '@/store/search.store';
+import { toast } from '@/store/ui.store';
 import { Modal } from '../ui/Modal';
 import { Input } from '../ui/Input';
 import { Select } from '../ui/Select';
@@ -19,10 +20,18 @@ export const SearchFiltersModal: FC<SearchFiltersModalProps> = ({
 
   const handleApply = () => {
     onClose();
+    toast.success({
+      title: 'Filters Applied',
+      message: 'Venue search results updated based on your selected criteria.',
+    });
   };
 
   const handleReset = () => {
     resetFilters();
+    toast.info({
+      title: 'Filters Cleared',
+      message: 'All venue search filters have been reset.',
+    });
   };
 
   return (

@@ -5,6 +5,7 @@ import { Edit } from 'lucide-react';
 import { useHallDetails } from '@/features/halls/hooks/useHallDetails';
 import { hallsApi } from '@/features/halls/api/halls.api';
 import type { HallRequestDTO } from '@/types/api';
+import { toast } from '@/store/ui.store';
 import { HallForm } from '../components/HallForm';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { ErrorState } from '@/components/ui/ErrorState';
@@ -22,7 +23,23 @@ export const EditHallPage: FC = () => {
       queryClient.invalidateQueries({ queryKey: ['hall', hallId] });
       queryClient.invalidateQueries({ queryKey: ['vendorHalls'] });
       queryClient.invalidateQueries({ queryKey: ['halls'] });
+      toast.success({
+        title: 'Venue Details Updated',
+        message: 'Your hall listing changes are now live.',
+        action: {
+          label: 'View My Venues',
+          onClick: () => {
+            navigate('/vendor/halls');
+          },
+        },
+      });
       navigate('/vendor/halls');
+    },
+    onError: (err: Error) => {
+      toast.error({
+        title: 'Update Failed',
+        message: err.message || 'Could not save venue changes. Please try again.',
+      });
     },
   });
 

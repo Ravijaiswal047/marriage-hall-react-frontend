@@ -1,6 +1,7 @@
 import type { FC, MouseEvent } from 'react';
 import { Heart } from 'lucide-react';
 import { useFavorites } from '../hooks/useFavorites';
+import { toast } from '@/store/ui.store';
 import { cn } from '@/lib/utils/cn';
 
 export interface FavoriteButtonProps {
@@ -26,9 +27,29 @@ export const FavoriteButton: FC<FavoriteButtonProps> = ({
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     e.preventDefault();
+    const nextState = !active;
     optimisticToggle(hallId);
+
+    if (nextState) {
+      toast.success({
+        title: 'Saved to Wishlist',
+        message: `${hallName} added to your saved venues.`,
+        action: {
+          label: 'View Wishlist',
+          onClick: () => {
+            window.location.href = '/wishlist';
+          },
+        },
+      });
+    } else {
+      toast.info({
+        title: 'Removed from Wishlist',
+        message: `${hallName} removed from your saved list.`,
+      });
+    }
+
     if (onToggle) {
-      onToggle(!active);
+      onToggle(nextState);
     }
   };
 
